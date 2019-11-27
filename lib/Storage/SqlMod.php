@@ -15,12 +15,12 @@ class sspmod_selfregister_Storage_SqlMod implements iUserCatalogue {
 	 */
 	public function __construct($authSourceConfig, $writeConfig, $attributes, $hashAlgo) {
 		$asc = SimpleSAML_Configuration::loadFromArray($authSourceConfig);
-	
+
 		try {
 			$this->dbh = new PDO($asc->getString('dsn'), $asc->getString('username'),  $asc->getString('password'));
 		} catch (PDOException $e) {
 			throw new Exception($e->getMessage());
-		} 
+		}
 
 		$driver = explode(':', $asc->getString('dsn'), 2);
 		$driver = strtolower($driver[0]);
@@ -29,8 +29,8 @@ class sspmod_selfregister_Storage_SqlMod implements iUserCatalogue {
 		switch ($driver) {
 			case 'mysql':
 				/* Use UTF-8. */
-				$this->dbh->exec("SET NAMES utf8");
-				$this->dbh->exec("SET CHARACTER SET utf8;");
+				$this->dbh->exec("SET NAMES utf8mb4");
+				$this->dbh->exec("SET CHARACTER SET utf8mb4;");
 				break;
 			case 'pgsql':
 				/* Use UTF-8. */
@@ -48,7 +48,7 @@ class sspmod_selfregister_Storage_SqlMod implements iUserCatalogue {
 	}
 
 	public function addUser($entry){
-		SimpleSAML_Logger::debug('entry var: ' . var_export($entry, 1));	
+		SimpleSAML_Logger::debug('entry var: ' . var_export($entry, 1));
 		if ($this->isRegistered('email', $entry['email'])) {
 			throw new sspmod_selfregister_Error_UserException('email_taken');
 
@@ -77,7 +77,7 @@ class sspmod_selfregister_Storage_SqlMod implements iUserCatalogue {
 		if(!in_array($this->hashAlgo, hash_algos(), true)) {
 			throw new Exception ('Hash algorithm ' . $this->hashAlgo . ' not supported');
 		}
-		
+
 		$hash =  hash($this->hashAlgo, ($salt.$plainPassword));
 
 		return $hash;
@@ -128,9 +128,9 @@ class sspmod_selfregister_Storage_SqlMod implements iUserCatalogue {
 				userid = :userid 
 		");
 		return $sth->execute(array(
-			':firstname' => $userInfo['firstname'], 
-			':lastname' => $userInfo['lastname'], 
-			':mail' => $userInfo['email'], 
+			':firstname' => $userInfo['firstname'],
+			':lastname' => $userInfo['lastname'],
+			':mail' => $userInfo['email'],
 			':userid' => $userid
 		));
 	}
@@ -141,7 +141,7 @@ class sspmod_selfregister_Storage_SqlMod implements iUserCatalogue {
 	}
 
 	public function isRegistered2($attribute, $value) {
-		// less crappy findAndGetUser		
+		// less crappy findAndGetUser
 
 
 	}
