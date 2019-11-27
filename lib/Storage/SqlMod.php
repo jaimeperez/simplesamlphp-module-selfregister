@@ -74,7 +74,7 @@ class sspmod_selfregister_Storage_SqlMod implements iUserCatalogue {
 	private function hash_pass($plainPassword) {
 		$salt = $this->salt;
 
-		if(!in_array($this->hashAlgo, hash_algos())) {
+		if(!in_array($this->hashAlgo, hash_algos(), true)) {
 			throw new Exception ('Hash algorithm ' . $this->hashAlgo . ' not supported');
 		}
 		

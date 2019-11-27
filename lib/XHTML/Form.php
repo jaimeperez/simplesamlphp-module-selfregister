@@ -117,13 +117,13 @@ class sspmod_selfregister_XHTML_Form {
 		if($this->actionEndpoint != 'delUser.php') {
 			$format = '<input class="inputelement" type="%s" id="%s" name="%s" value="%s" size="%s" %s />';
 			$attr = '';
-			if(in_array($elementId, $this->readonly)){
+			if(in_array($elementId, $this->readonly, true)){
 				$attr .= 'readonly="readonly"';
 			}
-			if(in_array($elementId, $this->disabled)){
+			if(in_array($elementId, $this->disabled, true)){
 				$attr .= 'disabled="disabled"';
 			}
-			if(in_array($elementId, $this->disabled)){
+			if(in_array($elementId, $this->disabled, true)){
 				$attr .= 'disabled="disabled"';
 			}
 
